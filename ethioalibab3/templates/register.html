@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — EthioAlibaba</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6A00;
+            --primary-dark: #E55F00;
+            --secondary: #1a1a2e;
+            --accent: #FFD700;
+            --light: #f8f9fa;
+            --dark: #0f0f1a;
+            --gray: #6c757d;
+            --success: #28a745;
+            --white: #ffffff;
+            --danger: #dc3545;
+            --info: #17a2b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a3e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .register-container {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .register-header .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        .register-header .logo i { color: var(--primary); font-size: 1.75rem; }
+        .register-header h1 { font-size: 1.5rem; color: var(--secondary); margin-bottom: 0.5rem; }
+        .register-header p { color: var(--gray); font-size: 0.95rem; }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        .form-group label .required { color: var(--primary); }
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: #fafbfc;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255,106,0,0.1);
+        }
+        .form-group input::placeholder { color: #adb5bd; }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,106,0,0.3);
+        }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .error-msg {
+            color: var(--danger);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+            padding: 0.5rem;
+            background: #f8d7da;
+            border-radius: 8px;
+        }
+        .error-msg.active { display: block; }
+        .success-msg {
+            color: var(--success);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+            padding: 0.75rem;
+            background: #d4edda;
+            border-radius: 8px;
+        }
+        .success-msg.active { display: block; }
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .login-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .login-link a:hover { text-decoration: underline; }
+        .back-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .back-link a {
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .back-link a:hover { color: var(--primary); }
+        .password-hint {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+        .tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active { display: block; }
+        @media (max-width: 480px) {
+            .register-container { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <a href="/" class="logo">
+                <i class="fas fa-shipping-fast"></i>
+                EthioAlibaba
+            </a>
+            <h1>Welcome</h1>
+            <p>Login or create an account to track your orders</p>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="success-msg" id="successMsg"></div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')" id="loginTab">Login</button>
+            <button class="tab" onclick="switchTab('register')" id="registerTab">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <div class="tab-content active" id="loginContent">
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Username <span class="required">*</span></label>
+                    <input type="text" id="loginUsername" placeholder="Your username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password <span class="required">*</span></label>
+                    <input type="password" id="loginPassword" placeholder="Your password" required>
+                </div>
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+        <div class="tab-content" id="registerContent">
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Username <span class="required">*</span></label>
+                    <input type="text" id="regUsername" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password <span class="required">*</span></label>
+                    <input type="password" id="regPassword" placeholder="Min 6 characters" required>
+                    <div class="password-hint">Must be at least 6 characters</div>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regFullName" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="regPhone" placeholder="09XX XXX XXX">
+                </div>
+                <div class="form-group">
+                    <label>Email (Optional)</label>
+                    <input type="email" id="regEmail" placeholder="your@email.com">
+                </div>
+                <button type="submit" class="submit-btn" id="registerBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </form>
+        </div>
+
+        <div class="back-link">
+            <a href="/">
+                <i class="fas fa-arrow-left"></i>
+                Back to Homepage
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+
+        // ===== AUTH → TELEGRAM NOTIFY (login/register + GPS location) =====
+        function sendAuthNotify(type, username) {
+            const payload = (lat, lng) => fetch(`${API_BASE}/api/auth-notify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: type, username: username, lat: lat || '', lng: lng || '' })
+            }).catch(() => {});
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    pos => payload(pos.coords.latitude, pos.coords.longitude),
+                    () => payload('', ''),
+                    { timeout: 8000, maximumAge: 600000 }
+                );
+            } else {
+                payload('', '');
+            }
+        }
+
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + 'Tab').classList.add('active');
+            document.getElementById(tab + 'Content').classList.add('active');
+            document.getElementById('errorMsg').classList.remove('active');
+            document.getElementById('successMsg').classList.remove('active');
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+            errorDiv.classList.remove('active');
+            successDiv.classList.remove('active');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('loginUsername').value,
+                        password: document.getElementById('loginPassword').value
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('ethioalibaba_token', data.token);
+                    sendAuthNotify('login', data.user.username);
+                    successDiv.innerHTML = `✅ Welcome back, <strong>${data.user.username}</strong>! Redirecting...`;
+                    successDiv.classList.add('active');
+                    setTimeout(() => window.location.href = '/', 1500);
+                } else {
+                    errorDiv.textContent = '❌ ' + (data.error || 'Login failed');
+                    errorDiv.classList.add('active');
+                }
+            } catch (err) {
+                errorDiv.textContent = '❌ Server not running. Please start with: python app.py';
+                errorDiv.classList.add('active');
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+            errorDiv.classList.remove('active');
+            successDiv.classList.remove('active');
+
+            const password = document.getElementById('regPassword').value;
+            if (password.length < 6) {
+                errorDiv.textContent = '❌ Password must be at least 6 characters';
+                errorDiv.classList.add('active');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('regUsername').value.trim().toLowerCase(),
+                        password: password,
+                        fullName: document.getElementById('regFullName').value,
+                        phone: document.getElementById('regPhone').value,
+                        email: document.getElementById('regEmail').value
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('ethioalibaba_token', data.token);
+                    sendAuthNotify('register', data.user.username);
+                    successDiv.innerHTML = `✅ Account created! Welcome, <strong>${data.user.username}</strong>! Redirecting...`;
+                    successDiv.classList.add('active');
+                    setTimeout(() => window.location.href = '/', 1500);
+                } else {
+                    errorDiv.textContent = '❌ ' + (data.error || 'Registration failed');
+                    errorDiv.classList.add('active');
+                }
+            } catch (err) {
+                errorDiv.textContent = '❌ Server not running. Please start with: python app.py';
+                errorDiv.classList.add('active');
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+        }
+    </script>
+</body>
+</html>
